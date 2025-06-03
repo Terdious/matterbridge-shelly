@@ -66,7 +66,7 @@ describe('initializePlugin', () => {
   } as unknown as Matterbridge;
 
   const mockConfig = {
-    'name': 'matterbridge-shelly',
+    'name': 'matterbridge-shelly-test',
     'type': 'DynamicPlatform',
     'version': '1.1.2',
     'username': 'admin',

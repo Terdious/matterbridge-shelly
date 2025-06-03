@@ -205,7 +205,7 @@ export class ShellyPlatform extends MatterbridgeDynamicPlatform {
     }
     // Expert mode setup
     if (config.expertMode === false) {
-      const shelly = matterbridge.plugins.get('matterbridge-shelly');
+      const shelly = matterbridge.plugins.get('matterbridge-shelly-test');
       if (shelly && shelly.schemaJson && isValidObject(shelly.schemaJson.properties, 1)) {
         const properties = shelly.schemaJson.properties as Record<string, object>;
         delete properties.switchList;
@@ -281,7 +281,7 @@ export class ShellyPlatform extends MatterbridgeDynamicPlatform {
 
     this.shelly = new Shelly(log, this.username, this.password);
     this.shelly.setLogLevel(log.logLevel, this.config.debugMdns as boolean, this.config.debugCoap as boolean, this.config.debugWs as boolean);
-    this.shelly.dataPath = path.join(matterbridge.matterbridgePluginDirectory, 'matterbridge-shelly');
+    this.shelly.dataPath = path.join(matterbridge.matterbridgePluginDirectory, 'matterbridge-shelly-test');
     this.shelly.interfaceName = matterbridge.mdnsInterface;
     this.shelly.ipv4Address = matterbridge.systemInformation.ipv4Address;
     this.shelly.ipv6Address = matterbridge.systemInformation.ipv6Address;
@@ -369,7 +369,7 @@ export class ShellyPlatform extends MatterbridgeDynamicPlatform {
           config.inputMomentaryList.push(discoveredDevice.id);
           this.log.info(`Shelly device ${hk}${discoveredDevice.id}${nf} host ${zb}${discoveredDevice.host}${nf} added to inputMomentaryList`);
         }
-        const shelly = this.matterbridge.plugins.get('matterbridge-shelly');
+        const shelly = this.matterbridge.plugins.get('matterbridge-shelly-test');
         if (shelly) this.matterbridge.plugins.saveConfigFromJson(shelly, this.config);
       }
       /*
@@ -380,7 +380,7 @@ export class ShellyPlatform extends MatterbridgeDynamicPlatform {
           config.nocacheList.push(discoveredDevice.id);
           this.log.info(`Shelly device ${hk}${discoveredDevice.id}${nf} host ${zb}${discoveredDevice.host}${nf} added to nocacheList`);
         }
-        const shelly = this.matterbridge.plugins.get('matterbridge-shelly');
+        const shelly = this.matterbridge.plugins.get('matterbridge-shelly-test');
         if (shelly) this.matterbridge.plugins.saveConfigFromJson(shelly, this.config);
       }
       */
@@ -1447,7 +1447,7 @@ export class ShellyPlatform extends MatterbridgeDynamicPlatform {
 
     // Create NodeStorageManager
     this.nodeStorageManager = new NodeStorageManager({
-      dir: path.join(this.matterbridge.matterbridgeDirectory, 'matterbridge-shelly'),
+      dir: path.join(this.matterbridge.matterbridgeDirectory, 'matterbridge-shelly-test'),
       writeQueue: false,
       expiredInterval: undefined,
       logging: false,
@@ -1465,7 +1465,7 @@ export class ShellyPlatform extends MatterbridgeDynamicPlatform {
       this.log.info('Resetting the Shellies cache...');
       const storedDevices = await this.nodeStorage.get<DiscoveredDevice[]>('DeviceIdentifiers', []);
       for (const device of storedDevices) {
-        const fileName = path.join(this.matterbridge.matterbridgePluginDirectory, 'matterbridge-shelly', `${device.id}.json`);
+        const fileName = path.join(this.matterbridge.matterbridgePluginDirectory, 'matterbridge-shelly-test', `${device.id}.json`);
         try {
           this.log.debug(`Deleting cache file: ${fileName}`);
           fs.unlinkSync(fileName);
@@ -1783,7 +1783,7 @@ export class ShellyPlatform extends MatterbridgeDynamicPlatform {
         await this.nodeStorage.set<string[]>('ChangedDevices', Array.from(this.changedDevices.values()));
         await this.nodeStorage.set<string[]>('GatewayDevices', Array.from(this.gatewayDevices.values()));
       }
-      const fileName = path.join(this.matterbridge.matterbridgePluginDirectory, 'matterbridge-shelly', `${value}.json`);
+      const fileName = path.join(this.matterbridge.matterbridgePluginDirectory, 'matterbridge-shelly-test', `${value}.json`);
       try {
         this.log.debug(`Deleting cache file: ${fileName}`);
         fs.unlinkSync(fileName);
@@ -1867,7 +1867,7 @@ export class ShellyPlatform extends MatterbridgeDynamicPlatform {
     }
     this.log.info(`Adding shelly device ${hk}${deviceId}${nf} host ${zb}${host}${nf}`);
     const log = new AnsiLogger({ logName: deviceId, logTimestampFormat: TimestampFormat.TIME_MILLIS, logLevel: this.log.logLevel });
-    const cacheFileName = path.join(this.matterbridge.matterbridgePluginDirectory, 'matterbridge-shelly', `${deviceId}.json`);
+    const cacheFileName = path.join(this.matterbridge.matterbridgePluginDirectory, 'matterbridge-shelly-test', `${deviceId}.json`);
     let device: ShellyDevice | undefined;
 
     let loadFromCache = true;
